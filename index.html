@@ -11,7 +11,7 @@
       background: black;
       color: #00ffff;
       font-family: 'Share Tech Mono', monospace;
-      font-size: 5.2vw; /* Se adapta a pantalla */
+      font-size: 5.2vw;
       overflow: hidden;
     }
 
@@ -42,6 +42,14 @@
       50% { opacity: 0; }
     }
 
+    .final {
+      text-align: center;
+      font-size: 10vw;
+      color: red;
+      text-shadow: 0 0 20px red;
+      margin-top: 5vh;
+    }
+
     @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
   </style>
 </head>
@@ -56,7 +64,7 @@
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
 
-    const letras = "1010101100110101";
+    const letras = "1010110";
     const fontSize = 18;
     const columns = Math.floor(canvas.width / fontSize);
     const drops = Array.from({ length: columns }).fill(1);
@@ -78,7 +86,7 @@
 
     setInterval(drawMatrix, 33);
 
-    // Generar IPs
+    // IPs falsas
     function generarIP() {
       return `${Math.floor(Math.random()*256)}.${Math.floor(Math.random()*256)}.${Math.floor(Math.random()*256)}.${Math.floor(Math.random()*256)}`;
     }
@@ -87,7 +95,7 @@
       return `192.168.${Math.floor(Math.random()*256)}.${Math.floor(Math.random()*256)}`;
     }
 
-    // Mensajes falsos para la broma
+    // Mensajes falsos
     const terminal = document.getElementById('terminal');
     const mensajes = [
       "↳ Escaneando red...",
@@ -117,6 +125,13 @@
       for (let linea of mensajes) {
         await escribirLinea("\n" + linea, 1000);
       }
+
+      // Mostrar mensaje de broma final
+      terminal.innerHTML += "\n\n";
+      const final = document.createElement("div");
+      final.className = "final";
+      final.innerText = "😈 HAS SIDO HACKEADO 😱";
+      terminal.appendChild(final);
     };
 
     iniciar();
