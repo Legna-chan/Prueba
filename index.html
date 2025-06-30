@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Escaneo completo</title>
+  <title>Analizando conexión...</title>
   <style>
     html, body {
       margin: 0;
@@ -10,7 +10,7 @@
       background: black;
       color: #00ffff;
       font-family: 'Share Tech Mono', monospace;
-      font-size: 5vw; /* LETRA GIGANTE para móvil */
+      font-size: 5.5vw;
       overflow: hidden;
     }
 
@@ -48,7 +48,7 @@
   <div id="terminal">Inicializando sistema<span class="parpadeo">_</span></div>
 
   <script>
-    // Fondo Matrix
+    // Matrix fondo
     const canvas = document.getElementById('matrixCanvas');
     const ctx = canvas.getContext('2d');
     canvas.height = window.innerHeight;
@@ -76,20 +76,24 @@
 
     setInterval(drawMatrix, 33);
 
-    // Terminal
+    // Generador de IP falsa
+    function generarIP() {
+      return `${Math.floor(Math.random()*256)}.${Math.floor(Math.random()*256)}.${Math.floor(Math.random()*256)}.${Math.floor(Math.random()*256)}`;
+    }
+
+    function generarIPPrivada() {
+      return `192.168.${Math.floor(Math.random()*256)}.${Math.floor(Math.random()*256)}`;
+    }
+
+    // Mensajes personalizados
     const terminal = document.getElementById('terminal');
     const mensajes = [
       "↳ Escaneando red...",
-      "↳ IP pública detectada: 192.168.404.69",
+      `↳ IP pública detectada: ${generarIP()}`,
+      `↳ IP privada: ${generarIPPrivada()}`,
       "↳ Sistema operativo: Android 13",
-      "↳ Cuenta vinculada: juanito123@gmail.com",
-      "↳ Número SIM: +52 1 999-***-****",
-      "↳ Localización exacta: 24.012, -107.394",
-      "↳ Cámara frontal activada...",
-      "↳ Grabando audio ambiental...",
-      "↳ Hackeo completo...",
-      "☠️  ESTÁS SIENDO OBSERVADO.",
-      "💀 JAJA, es solo una broma. Relájate 😄"
+      "↳ Número SIM: +52 667 • Culiacán, Sinaloa - Alturas del Sur",
+      "⚠️  Información obtenida con éxito..."
     ];
 
     const escribirLinea = (texto, delay) => {
@@ -110,7 +114,7 @@
     const iniciar = async () => {
       terminal.innerHTML = "Inicializando sistema...\n<span class=\"parpadeo\">_</span>";
       for (let linea of mensajes) {
-        await escribirLinea("\n" + linea, 1200);
+        await escribirLinea("\n" + linea, 1000);
       }
     };
 
