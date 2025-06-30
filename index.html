@@ -14,9 +14,7 @@
       color: #00ff00; /* verde neón */
       text-shadow:
         0 0 5px #00ff00,
-        0 0 10px #00ff00,
-        0 0 20px #00ff00,
-        0 0 40px #00ff00;
+        0 0 10px #00ff00;
     }
 
     canvas {
@@ -32,12 +30,16 @@
       white-space: pre-wrap;
       padding: 5vw;
       line-height: 1.6;
-      background-color: rgba(0,0,0,0.7);
+      background-color: rgba(0,0,0,0.85); /* menos transparente */
       word-wrap: break-word;
       min-height: 100vh;
       box-sizing: border-box;
       letter-spacing: 0.05em;
       user-select: none;
+      color: #00ff00;
+      text-shadow:
+        0 0 6px #00ff00,
+        0 0 12px #00ff00;
     }
 
     .parpadeo {
@@ -45,8 +47,7 @@
       color: #00ff00;
       text-shadow:
         0 0 7px #00ff00,
-        0 0 14px #00ff00,
-        0 0 21px #00ff00;
+        0 0 14px #00ff00;
     }
 
     @keyframes blink {
@@ -60,8 +61,7 @@
       color: #00ff00;
       text-shadow:
         0 0 10px #00ff00,
-        0 0 30px #00ff00,
-        0 0 60px #00ff00;
+        0 0 30px #00ff00;
       margin: 3vh auto 8vh;
       user-select: none;
     }
@@ -85,22 +85,25 @@
   <div id="terminal">Inicializando sistema<span class="parpadeo">_</span></div>
 
   <script>
-    // Fondo matrix con más letras para sensación más poblada
+    // Fondo matrix menos borroso, más definido
     const canvas = document.getElementById('matrixCanvas');
     const ctx = canvas.getContext('2d');
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
 
-    // Letras clásicas de Matrix y algunos símbolos para más "tecno"
     const letras = "01{}[]<>+-*/=abcdef0123456789ABCDEF";
     const fontSize = 16;
     const columns = Math.floor(canvas.width / fontSize);
     const drops = Array.from({ length: columns }).fill(1);
 
     function drawMatrix() {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      // Fondo con menor transparencia para evitar rastro borroso
+      ctx.fillStyle = "rgba(0, 0, 0, 0.15)"; // menos transparente que antes
       ctx.fillRect(0, 0, canvas.width, canvas.height);
+
       ctx.fillStyle = "#00ff00";
+      ctx.shadowColor = "#00ff00";
+      ctx.shadowBlur = 5;
       ctx.font = fontSize + "px 'Share Tech Mono'";
       for (let i = 0; i < drops.length; i++) {
         const text = letras.charAt(Math.floor(Math.random() * letras.length));
@@ -110,6 +113,7 @@
         }
         drops[i]++;
       }
+      ctx.shadowBlur = 0; // reset shadowBlur para no afectar otras cosas
     }
 
     setInterval(drawMatrix, 30);
