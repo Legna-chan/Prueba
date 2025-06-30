@@ -7,20 +7,24 @@
   <style>
     html, body {
       margin: 0; padding: 0;
-      background: #001030; /* azul oscuro */
+      background: black; /* fondo negro */
       font-family: 'Share Tech Mono', monospace;
       font-size: 5vw;
       overflow-y: auto;
       color: #00ff00;
       text-shadow: none;
+      height: 100%;
+      width: 100%;
     }
 
     canvas {
       position: fixed;
       top: 0; left: 0;
       z-index: 0;
-      background: #001030;
+      background: black;
       display: block;
+      height: 100vh;
+      width: 100vw;
     }
 
     #terminal {
@@ -65,7 +69,6 @@
       border-radius: 20px;
       display: block;
       margin: 4vh auto 2vh;
-      /* Glow verde neón */
       box-shadow:
         0 0 20px #00ff00,
         0 0 40px #00ff00,
@@ -73,7 +76,6 @@
       transition: box-shadow 0.3s ease-in-out;
     }
 
-    /* Opcional: efecto glow pulsante */
     .waifu-img:hover {
       box-shadow:
         0 0 30px #00ff00,
@@ -95,30 +97,32 @@
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
 
-    const letras = "0123456789ABCDEF{}[]<>+-*/=abcdef";
-    const fontSize = 16;
-    const columns = Math.floor(canvas.width / fontSize);
+    const letras = "01";  // Para estilo matrix clásico
+    const fontSize = 18;  
+    const columns = Math.floor(canvas.width / fontSize) * 2; // Más columnas para más letras
     const drops = Array.from({ length: columns }).fill(1);
 
     function drawMatrix() {
-      ctx.fillStyle = "#001030"; // fondo azul oscuro sólido
+      // Fondo negro sólido, sin transparencia
+      ctx.fillStyle = "black";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.fillStyle = "#3399ff"; // azul claro y nítido
-      ctx.shadowBlur = 0;
+      ctx.fillStyle = "#00ff00"; // verde neón brillante
+      ctx.shadowColor = "#00ff00";
+      ctx.shadowBlur = 8;
       ctx.font = fontSize + "px 'Share Tech Mono'";
 
       for (let i = 0; i < drops.length; i++) {
         const text = letras.charAt(Math.floor(Math.random() * letras.length));
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        ctx.fillText(text, i * fontSize * 0.5, drops[i] * fontSize);
         if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
           drops[i] = 0;
         }
-        drops[i]++;
+        drops[i] += 1.4; // Caída más rápida
       }
     }
 
-    setInterval(drawMatrix, 30);
+    setInterval(drawMatrix, 25);
 
     function generarIP() {
       return `${Math.floor(Math.random()*256)}.${Math.floor(Math.random()*256)}.${Math.floor(Math.random()*256)}.${Math.floor(Math.random()*256)}`;
@@ -147,7 +151,7 @@
             terminal.innerHTML += '\n<span class="parpadeo">_</span>';
             setTimeout(resolve, delay);
           }
-        }, 45);
+        }, 40);
       });
     };
 
@@ -159,7 +163,7 @@
 
       terminal.innerHTML += "\n\n";
       const img = document.createElement("img");
-      img.src = "https://files.catbox.moe/zqzw6l.jpg"; // Imagen waifu hacker
+      img.src = "https://files.catbox.moe/zqzw6l.jpg";
       img.alt = "Waifu Hacker";
       img.className = "waifu-img";
       terminal.appendChild(img);
@@ -171,6 +175,11 @@
     };
 
     iniciar();
+
+    window.addEventListener('resize', () => {
+      canvas.height = window.innerHeight;
+      canvas.width = window.innerWidth;
+    });
   </script>
 </body>
 </html>
