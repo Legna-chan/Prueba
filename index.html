@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Analizando conexión...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     html, body {
       margin: 0;
@@ -10,7 +11,7 @@
       background: black;
       color: #00ffff;
       font-family: 'Share Tech Mono', monospace;
-      font-size: 5.5vw;
+      font-size: 5.2vw; /* Se adapta a pantalla */
       overflow: hidden;
     }
 
@@ -25,10 +26,11 @@
       position: relative;
       z-index: 1;
       white-space: pre-wrap;
-      padding: 20px;
+      padding: 5vw;
       line-height: 1.6;
       background-color: rgba(0, 0, 0, 0.6);
       text-shadow: 0 0 10px #0ff;
+      word-wrap: break-word;
     }
 
     .parpadeo {
@@ -48,13 +50,13 @@
   <div id="terminal">Inicializando sistema<span class="parpadeo">_</span></div>
 
   <script>
-    // Matrix fondo
+    // Fondo Matrix
     const canvas = document.getElementById('matrixCanvas');
     const ctx = canvas.getContext('2d');
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
 
-    const letras = "1010110";
+    const letras = "1010101100110101";
     const fontSize = 18;
     const columns = Math.floor(canvas.width / fontSize);
     const drops = Array.from({ length: columns }).fill(1);
@@ -76,7 +78,7 @@
 
     setInterval(drawMatrix, 33);
 
-    // Generador de IP falsa
+    // Generar IPs
     function generarIP() {
       return `${Math.floor(Math.random()*256)}.${Math.floor(Math.random()*256)}.${Math.floor(Math.random()*256)}.${Math.floor(Math.random()*256)}`;
     }
@@ -85,15 +87,14 @@
       return `192.168.${Math.floor(Math.random()*256)}.${Math.floor(Math.random()*256)}`;
     }
 
-    // Mensajes personalizados
+    // Mensajes falsos para la broma
     const terminal = document.getElementById('terminal');
     const mensajes = [
       "↳ Escaneando red...",
-      `↳ IP pública detectada: ${generarIP()}`,
+      `↳ IP pública: ${generarIP()}`,
       `↳ IP privada: ${generarIPPrivada()}`,
-      "↳ Sistema operativo: Android 13",
-      "↳ Número SIM: +52 667 • Culiacán, Sinaloa - Alturas del Sur",
-      "⚠️  Información obtenida con éxito..."
+      "↳ Número SIM: +52 667 - Culiacán, Sinaloa (Alturas del Sur)",
+      "✔️  Datos recopilados exitosamente..."
     ];
 
     const escribirLinea = (texto, delay) => {
