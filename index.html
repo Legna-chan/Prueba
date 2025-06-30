@@ -9,12 +9,10 @@
       margin: 0; padding: 0;
       background: black;
       font-family: 'Share Tech Mono', monospace;
-      font-size: 5.2vw;
+      font-size: 5vw;
       overflow-y: auto;
-      color: #00ff00; /* verde neón */
-      text-shadow:
-        0 0 5px #00ff00,
-        0 0 10px #00ff00;
+      color: #00ff00; /* Verde del terminal */
+      text-shadow: none; /* Sin sombra ni difuminado */
     }
 
     canvas {
@@ -30,24 +28,20 @@
       white-space: pre-wrap;
       padding: 5vw;
       line-height: 1.6;
-      background-color: rgba(0,0,0,0.85); /* menos transparente */
+      background-color: rgba(0,0,0,0.85); /* Fondo semitransparente negro */
       word-wrap: break-word;
       min-height: 100vh;
       box-sizing: border-box;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
       user-select: none;
-      color: #00ff00;
-      text-shadow:
-        0 0 6px #00ff00,
-        0 0 12px #00ff00;
+      color: #00ff00; /* Verde limpio sin sombra */
+      text-shadow: none;
     }
 
     .parpadeo {
       animation: blink 1s infinite;
       color: #00ff00;
-      text-shadow:
-        0 0 7px #00ff00,
-        0 0 14px #00ff00;
+      text-shadow: none;
     }
 
     @keyframes blink {
@@ -59,20 +53,16 @@
       text-align: center;
       font-size: 6vw;
       color: #00ff00;
-      text-shadow:
-        0 0 10px #00ff00,
-        0 0 30px #00ff00;
       margin: 3vh auto 8vh;
       user-select: none;
+      text-shadow: none;
     }
 
     .waifu-img {
       width: 90%;
       max-width: 420px;
       border-radius: 20px;
-      box-shadow:
-        0 0 25px #00ff00,
-        0 0 50px #00ff00;
+      box-shadow: none;
       display: block;
       margin: 4vh auto 2vh;
     }
@@ -85,26 +75,26 @@
   <div id="terminal">Inicializando sistema<span class="parpadeo">_</span></div>
 
   <script>
-    // Fondo matrix menos borroso, más definido
+    // Fondo matrix letras azules bien definidas
     const canvas = document.getElementById('matrixCanvas');
     const ctx = canvas.getContext('2d');
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
 
-    const letras = "01{}[]<>+-*/=abcdef0123456789ABCDEF";
+    const letras = "0123456789ABCDEF{}[]<>+-*/=abcdef";
     const fontSize = 16;
     const columns = Math.floor(canvas.width / fontSize);
     const drops = Array.from({ length: columns }).fill(1);
 
     function drawMatrix() {
-      // Fondo con menor transparencia para evitar rastro borroso
-      ctx.fillStyle = "rgba(0, 0, 0, 0.15)"; // menos transparente que antes
+      // Fondo negro sólido con rastro mínimo para evitar borrosidad
+      ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.fillStyle = "#00ff00";
-      ctx.shadowColor = "#00ff00";
-      ctx.shadowBlur = 5;
+      ctx.fillStyle = "#0099ff"; // Azul brillante y nítido
+      ctx.shadowBlur = 0; // Sin sombra para texto nítido
       ctx.font = fontSize + "px 'Share Tech Mono'";
+
       for (let i = 0; i < drops.length; i++) {
         const text = letras.charAt(Math.floor(Math.random() * letras.length));
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
@@ -113,7 +103,6 @@
         }
         drops[i]++;
       }
-      ctx.shadowBlur = 0; // reset shadowBlur para no afectar otras cosas
     }
 
     setInterval(drawMatrix, 30);
@@ -135,7 +124,6 @@
       "✔️  Datos recopilados exitosamente..."
     ];
 
-    // Efecto de escritura en pantalla
     const escribirLinea = (texto, delay) => {
       return new Promise(resolve => {
         let index = 0;
