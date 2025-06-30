@@ -2,17 +2,16 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Escaneo en progreso...</title>
+  <title>Analizando sistema...</title>
   <style>
-    /* Fondo tipo Matrix con canvas */
     html, body {
       margin: 0;
       padding: 0;
-      overflow: hidden;
       background: black;
-      color: #00ff00;
-      font-family: 'Courier New', monospace;
-      font-size: 20px;
+      color: #00ffff; /* Cian neón */
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 24px; /* Más grande */
+      overflow: hidden;
     }
 
     canvas {
@@ -26,9 +25,9 @@
       position: relative;
       z-index: 1;
       white-space: pre-wrap;
-      padding: 30px;
-      line-height: 1.5;
+      padding: 40px;
       background-color: rgba(0, 0, 0, 0.7);
+      text-shadow: 0 0 8px #0ff;
     }
 
     .parpadeo {
@@ -39,32 +38,34 @@
       0%, 100% { opacity: 1; }
       50% { opacity: 0; }
     }
+
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
   </style>
 </head>
 <body>
   <canvas id="matrixCanvas"></canvas>
-  <div id="terminal">Iniciando escaneo de red<span class="parpadeo">_</span></div>
+  <div id="terminal">Analizando sistema<span class="parpadeo">_</span></div>
 
   <script>
-    // Fondo Matrix
+    // Fondo tipo Matrix
     const canvas = document.getElementById('matrixCanvas');
     const ctx = canvas.getContext('2d');
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
 
-    const letters = "01";
-    const fontSize = 16;
-    const columns = canvas.width / fontSize;
+    const letras = "101011010010111001010110";
+    const fontSize = 20;
+    const columns = Math.floor(canvas.width / fontSize);
     const drops = Array.from({ length: columns }).fill(1);
 
     function drawMatrix() {
       ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "#0F0";
-      ctx.font = fontSize + "px monospace";
+      ctx.fillStyle = "#00ffff"; // Cian neón
+      ctx.font = fontSize + "px 'Share Tech Mono'";
 
       for (let i = 0; i < drops.length; i++) {
-        const text = letters[Math.floor(Math.random() * letters.length)];
+        const text = letras[Math.floor(Math.random() * letras.length)];
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
         if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
@@ -77,20 +78,19 @@
 
     setInterval(drawMatrix, 33);
 
-    // Terminal falsa
+    // Terminal animada
     const terminal = document.getElementById('terminal');
     const mensajes = [
-      "Conectando con servidor DNS...",
-      "Recopilando IP pública...",
-      "Buscando IP privada...",
-      "Rastreando ubicación GPS...",
-      "Accediendo a cámara frontal...",
-      "Obteniendo historial de búsqueda...",
-      "Hackeo completado con éxito.",
-      "😱 ¡Caíste en la broma! Esta página no hace nada 😄"
+      "↳ Iniciando conexión segura...",
+      "↳ Escaneando puertos abiertos...",
+      "↳ Obteniendo IP pública y privada...",
+      "↳ Accediendo a módulos del sistema...",
+      "↳ Localizando GPS con precisión milimétrica...",
+      "↳ Extrayendo historial de apps recientes...",
+      "↳ Infiltración completada exitosamente.",
+      "⚠️  ALERTA: Sistema comprometido...",
+      "💀 JAJA, era una broma. Tu dispositivo está seguro 😄"
     ];
-
-    let i = 0;
 
     const escribirLinea = (texto, delay) => {
       return new Promise(resolve => {
@@ -103,14 +103,14 @@
             terminal.innerHTML += '\n<span class="parpadeo">_</span>';
             setTimeout(resolve, delay);
           }
-        }, 50);
+        }, 45);
       });
     };
 
     const iniciar = async () => {
-      terminal.innerHTML = "Iniciando escaneo de red...\n<span class=\"parpadeo\">_</span>";
+      terminal.innerHTML = "Analizando sistema...\n<span class=\"parpadeo\">_</span>";
       for (let linea of mensajes) {
-        await escribirLinea('\n' + linea, 1000);
+        await escribirLinea("\n" + linea, 1000);
       }
     };
 
