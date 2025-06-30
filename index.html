@@ -7,19 +7,20 @@
   <style>
     html, body {
       margin: 0; padding: 0;
-      background: black;
+      background: #001030; /* azul oscuro */
       font-family: 'Share Tech Mono', monospace;
       font-size: 5vw;
       overflow-y: auto;
-      color: #00ff00; /* Verde del terminal */
-      text-shadow: none; /* Sin sombra ni difuminado */
+      color: #00ff00;
+      text-shadow: none;
     }
 
     canvas {
       position: fixed;
       top: 0; left: 0;
       z-index: 0;
-      background: black;
+      background: #001030;
+      display: block;
     }
 
     #terminal {
@@ -28,13 +29,13 @@
       white-space: pre-wrap;
       padding: 5vw;
       line-height: 1.6;
-      background-color: rgba(0,0,0,0.85); /* Fondo semitransparente negro */
+      background-color: rgba(0,0,0,0.85);
       word-wrap: break-word;
       min-height: 100vh;
       box-sizing: border-box;
       letter-spacing: 0.06em;
       user-select: none;
-      color: #00ff00; /* Verde limpio sin sombra */
+      color: #00ff00;
       text-shadow: none;
     }
 
@@ -62,9 +63,23 @@
       width: 90%;
       max-width: 420px;
       border-radius: 20px;
-      box-shadow: none;
       display: block;
       margin: 4vh auto 2vh;
+      /* Glow verde neón */
+      box-shadow:
+        0 0 20px #00ff00,
+        0 0 40px #00ff00,
+        0 0 60px #00ff00;
+      transition: box-shadow 0.3s ease-in-out;
+    }
+
+    /* Opcional: efecto glow pulsante */
+    .waifu-img:hover {
+      box-shadow:
+        0 0 30px #00ff00,
+        0 0 60px #00ff00,
+        0 0 90px #00ff00;
+      cursor: pointer;
     }
 
     @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
@@ -75,7 +90,6 @@
   <div id="terminal">Inicializando sistema<span class="parpadeo">_</span></div>
 
   <script>
-    // Fondo matrix letras azules bien definidas
     const canvas = document.getElementById('matrixCanvas');
     const ctx = canvas.getContext('2d');
     canvas.height = window.innerHeight;
@@ -87,12 +101,11 @@
     const drops = Array.from({ length: columns }).fill(1);
 
     function drawMatrix() {
-      // Fondo negro sólido con rastro mínimo para evitar borrosidad
-      ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+      ctx.fillStyle = "#001030"; // fondo azul oscuro sólido
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.fillStyle = "#0099ff"; // Azul brillante y nítido
-      ctx.shadowBlur = 0; // Sin sombra para texto nítido
+      ctx.fillStyle = "#3399ff"; // azul claro y nítido
+      ctx.shadowBlur = 0;
       ctx.font = fontSize + "px 'Share Tech Mono'";
 
       for (let i = 0; i < drops.length; i++) {
@@ -107,7 +120,6 @@
 
     setInterval(drawMatrix, 30);
 
-    // Generar IPs falsas
     function generarIP() {
       return `${Math.floor(Math.random()*256)}.${Math.floor(Math.random()*256)}.${Math.floor(Math.random()*256)}.${Math.floor(Math.random()*256)}`;
     }
@@ -147,7 +159,7 @@
 
       terminal.innerHTML += "\n\n";
       const img = document.createElement("img");
-      img.src = "https://files.catbox.moe/zqzw6l.jpg";
+      img.src = "https://files.catbox.moe/zqzw6l.jpg"; // Imagen waifu hacker
       img.alt = "Waifu Hacker";
       img.className = "waifu-img";
       terminal.appendChild(img);
