@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Escaneo en progreso...</title>
+  <style>
+    body {
+      background-color: black;
+      color: lime;
+      font-family: monospace;
+      padding: 20px;
+    }
+    #terminal {
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <div id="terminal">Iniciando escaneo de red...
+</div>
+
+  <script>
+    const terminal = document.getElementById('terminal');
+    const mensajes = [
+      "Conectando con servidor DNS...",
+      "Recopilando IP...",
+      "Obteniendo ubicación GPS...",
+      "Accediendo a cámara frontal...",
+      "Hackeo completado con éxito.",
+      "😱 ¡Caíste en la broma! Esta página no hace nada 😄"
+    ];
+
+    let i = 0;
+    const intervalo = setInterval(() => {
+      if (i < mensajes.length) {
+        terminal.innerText += "\n" + mensajes[i];
+        i++;
+      } else {
+        clearInterval(intervalo);
+      }
+    }, 1500);
+  </script>
+</body>
+</html>
